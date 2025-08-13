@@ -6,18 +6,15 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Image,
-  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import EventCard from '../components/EventCard';
-import CategoryTabs from '../components/CategoryTabs';
-import { events } from '../utils/mockData';
+import { router } from 'expo-router';
+import EventCard from '../../components/EventCard';
+import CategoryTabs from '../../components/CategoryTabs';
+import { events } from '../../utils/mockData';
 
-const { width } = Dimensions.get('window');
-
-const EventsScreen = ({ navigation }) => {
+export default function EventsScreen() {
   const [selectedTab, setSelectedTab] = useState('Upcoming');
 
   const tabs = ['Upcoming', 'Past', 'Cancelled'];
@@ -30,7 +27,10 @@ const EventsScreen = ({ navigation }) => {
   });
 
   const handleEventPress = (event) => {
-    navigation.navigate('EventDetail', { event });
+    router.push({
+      pathname: '/event-detail',
+      params: { eventId: event.id }
+    });
   };
 
   return (
@@ -41,7 +41,7 @@ const EventsScreen = ({ navigation }) => {
           <Text style={styles.headerTitle}>My Events</Text>
           <TouchableOpacity 
             style={styles.addButton}
-            onPress={() => navigation.navigate('CreateEvent')}
+            onPress={() => router.push('/create-event')}
           >
             <Ionicons name="add" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -82,7 +82,7 @@ const EventsScreen = ({ navigation }) => {
         {/* Floating Action Button */}
         <TouchableOpacity 
           style={styles.fab}
-          onPress={() => navigation.navigate('CreateEvent')}
+          onPress={() => router.push('/create-event')}
         >
           <LinearGradient
             colors={['#FF4757', '#FF3742']}
@@ -94,7 +94,7 @@ const EventsScreen = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -169,5 +169,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default EventsScreen;

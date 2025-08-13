@@ -5,14 +5,28 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const { width } = Dimensions.get('window');
+interface Event {
+  id: number;
+  name: string;
+  venue: string;
+  date: string;
+  time: string;
+  image: string;
+  status: string;
+  attendees: number;
+  category: string;
+}
 
-const EventCard = ({ event, onPress }) => {
+interface EventCardProps {
+  event: Event;
+  onPress: (event: Event) => void;
+}
+
+const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => onPress(event)}>
       <Image source={{ uri: event.image }} style={styles.image} />

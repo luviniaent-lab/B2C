@@ -1,4 +1,50 @@
-export const venues = [
+export interface Venue {
+  id: number;
+  name: string;
+  rating: number;
+  image: string;
+  category: string;
+  location: string;
+  price: string;
+}
+
+export interface Event {
+  id: number;
+  name: string;
+  venue: string;
+  date: string;
+  time: string;
+  image: string;
+  status: string;
+  attendees: number;
+  category: string;
+}
+
+export interface Farmhouse {
+  id: number;
+  name: string;
+  location: string;
+  price: string;
+  rating: number;
+  image: string;
+  amenities: string[];
+  capacity: string;
+}
+
+export interface Restaurant {
+  id: number;
+  name: string;
+  cuisine: string;
+  location: string;
+  price: string;
+  rating: number;
+  image: string;
+  category: string;
+  features: string[];
+  timing: string;
+}
+
+export const venues: Venue[] = [
   {
     id: 1,
     name: 'Sky Lounge',
@@ -55,7 +101,7 @@ export const venues = [
   },
 ];
 
-export const events = [
+export const events: Event[] = [
   {
     id: 1,
     name: 'Summer Rooftop Party',
@@ -102,7 +148,7 @@ export const events = [
   },
 ];
 
-export const farmhouses = [
+export const farmhouses: Farmhouse[] = [
   {
     id: 1,
     name: 'Green Valley Farmhouse',
@@ -135,7 +181,7 @@ export const farmhouses = [
   },
 ];
 
-export const restaurants = [
+export const restaurants: Restaurant[] = [
   {
     id: 1,
     name: 'The Sky Lounge',

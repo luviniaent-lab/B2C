@@ -12,7 +12,23 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
-const VenueCard = ({ venue, onPress, style }) => {
+interface Venue {
+  id: number;
+  name: string;
+  rating: number;
+  image: string;
+  category: string;
+  location: string;
+  price: string;
+}
+
+interface VenueCardProps {
+  venue: Venue;
+  onPress: (venue: Venue) => void;
+  style?: any;
+}
+
+const VenueCard: React.FC<VenueCardProps> = ({ venue, onPress, style }) => {
   return (
     <TouchableOpacity 
       style={[styles.card, style]} 

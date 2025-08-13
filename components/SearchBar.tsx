@@ -8,7 +8,19 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const SearchBar = ({ value, onChangeText, onFilter, placeholder = "Search..." }) => {
+interface SearchBarProps {
+  value: string;
+  onChangeText: (text: string) => void;
+  onFilter?: () => void;
+  placeholder?: string;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ 
+  value, 
+  onChangeText, 
+  onFilter, 
+  placeholder = "Search..." 
+}) => {
   return (
     <View style={styles.container}>
       <LinearGradient

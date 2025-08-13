@@ -7,19 +7,19 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  TextInput,
   Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import VenueCard from '../components/VenueCard';
-import SearchBar from '../components/SearchBar';
-import CategoryTabs from '../components/CategoryTabs';
-import { venues } from '../utils/mockData';
+import { router } from 'expo-router';
+import VenueCard from '../../components/VenueCard';
+import SearchBar from '../../components/SearchBar';
+import CategoryTabs from '../../components/CategoryTabs';
+import { venues } from '../../utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 
-const HomeScreen = ({ navigation }) => {
+export default function HomeScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchText, setSearchText] = useState('');
 
@@ -32,7 +32,6 @@ const HomeScreen = ({ navigation }) => {
   });
 
   const handleVenuePress = (venue) => {
-    // Navigate to venue details or booking screen
     console.log('Venue selected:', venue.name);
   };
 
@@ -73,7 +72,10 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.featuredContent}>
               <Text style={styles.featuredTitle}>Discover Amazing Venues</Text>
               <Text style={styles.featuredSubtitle}>Book your perfect event space today</Text>
-              <TouchableOpacity style={styles.featuredButton}>
+              <TouchableOpacity 
+                style={styles.featuredButton}
+                onPress={() => router.push('/create-event')}
+              >
                 <Text style={styles.featuredButtonText}>Explore Now</Text>
               </TouchableOpacity>
             </View>
@@ -101,7 +103,7 @@ const HomeScreen = ({ navigation }) => {
         {/* Quick Action Button */}
         <TouchableOpacity 
           style={styles.quickActionButton}
-          onPress={() => navigation.navigate('CreateEvent')}
+          onPress={() => router.push('/create-event')}
         >
           <LinearGradient
             colors={['#FF4757', '#FF3742']}
@@ -113,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -218,5 +220,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default HomeScreen;

@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import CategoryTabs from '../components/CategoryTabs';
-import { restaurants } from '../utils/mockData';
+import CategoryTabs from '../../components/CategoryTabs';
+import { restaurants } from '../../utils/mockData';
 
 const { width } = Dimensions.get('window');
 
-const RestaurantScreen = ({ navigation }) => {
+export default function RestaurantScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = ['All', 'Fine Dining', 'Casual', 'Bar', 'Rooftop'];
@@ -140,7 +140,7 @@ const RestaurantScreen = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -361,5 +361,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 });
-
-export default RestaurantScreen;

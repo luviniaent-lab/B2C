@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import CategoryTabs from '../components/CategoryTabs';
-import { farmhouses } from '../utils/mockData';
+import CategoryTabs from '../../components/CategoryTabs';
+import { farmhouses } from '../../utils/mockData';
 
 const { width } = Dimensions.get('window');
 
-const FarmhouseScreen = ({ navigation }) => {
+export default function FarmhouseScreen() {
   const [selectedFilter, setSelectedFilter] = useState('All');
 
   const filters = ['All', 'Pool', 'Garden', 'BBQ', 'AC'];
@@ -85,12 +85,12 @@ const FarmhouseScreen = ({ navigation }) => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Farmhouses</Text>
-          <TouchableOpacity style={styles.searchButton}>
-            <Ionicons name="search-outline" size={24} color="#FFF" />
+          <TouchableOpacity style={styles.filterButton}>
+            <Ionicons name="filter-outline" size={24} color="#FFF" />
           </TouchableOpacity>
         </View>
 
-        {/* Filters */}
+        {/* Categories */}
         <CategoryTabs
           categories={filters}
           selectedCategory={selectedFilter}
@@ -122,7 +122,7 @@ const FarmhouseScreen = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#FFF',
   },
-  searchButton: {
+  filterButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -301,5 +301,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 });
-
-export default FarmhouseScreen;

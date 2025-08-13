@@ -6,12 +6,11 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const ProfileScreen = () => {
+export default function ProfileScreen() {
   const menuItems = [
     {
       icon: 'calendar-outline',
@@ -117,7 +116,7 @@ const ProfileScreen = () => {
               <View style={styles.nameContainer}>
                 <Text style={styles.profileName}>XYZ Verified?</Text>
                 <View style={styles.verifiedBadge}>
-                  <Text style={styles.verifiedText}>(tick)</Text>
+                  <Ionicons name="checkmark" size={12} color="#FFF" />
                 </View>
               </View>
               <Text style={styles.profileEmail}>xyz@gmail.com</Text>
@@ -160,7 +159,7 @@ const ProfileScreen = () => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -210,13 +209,10 @@ const styles = StyleSheet.create({
   verifiedBadge: {
     backgroundColor: '#00D2D3',
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 4,
     borderRadius: 10,
-  },
-  verifiedText: {
-    fontSize: 12,
-    color: '#FFF',
-    fontWeight: '600',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileEmail: {
     fontSize: 14,
@@ -296,5 +292,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-export default ProfileScreen;

@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
-const CreateEventScreen = ({ navigation }) => {
+export default function CreateEventScreen() {
   const [eventData, setEventData] = useState({
     name: '',
     venue: '',
@@ -34,7 +35,7 @@ const CreateEventScreen = ({ navigation }) => {
     Alert.alert(
       'Success',
       'Event created successfully!',
-      [{ text: 'OK', onPress: () => navigation.goBack() }]
+      [{ text: 'OK', onPress: () => router.back() }]
     );
   };
 
@@ -45,7 +46,7 @@ const CreateEventScreen = ({ navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity 
             style={styles.backButton}
-            onPress={() => navigation.goBack()}
+            onPress={() => router.back()}
           >
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -191,7 +192,7 @@ const CreateEventScreen = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -331,5 +332,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 });
-
-export default CreateEventScreen;

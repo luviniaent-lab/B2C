@@ -11,12 +11,24 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { router, useLocalSearchParams } from 'expo-router';
+import { events } from '../utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 
-const EventDetailScreen = ({ route, navigation }) => {
-  const { event } = route.params;
+export default function EventDetailScreen() {
+  const { eventId } = useLocalSearchParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const event = events.find(e => e.id.toString() === eventId);
+
+  if (!event) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Event not found</Text>
+      </View>
+    );
+  }
 
   const eventDetails = {
     description: 'Join us for an unforgettable evening filled with great music, delicious food, and amazing company. This exclusive event features live DJ performances, premium cocktails, and a stunning rooftop view of the city.',
@@ -48,7 +60,7 @@ const EventDetailScreen = ({ route, navigation }) => {
         <SafeAreaView style={styles.navHeader}>
           <TouchableOpacity 
             style={styles.backButton}
-            onPress={() => navigation.goBack()}
+            onPress={() => router.back()}
           >
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -173,12 +185,21 @@ const EventDetailScreen = ({ route, navigation }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 18,
+    color: '#666',
   },
   imageContainer: {
     height: height * 0.4,
@@ -391,5 +412,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 });
-
-export default EventDetailScreen;
