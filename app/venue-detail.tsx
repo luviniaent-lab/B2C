@@ -13,7 +13,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { venues } from '../utils/mockData';
+import { venues } from './utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 

@@ -12,10 +12,10 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import VenueCard from '../../components/VenueCard';
-import SearchBar from '../../components/SearchBar';
-import CategoryTabs from '../../components/CategoryTabs';
-import { venues } from '../../utils/mockData';
+import VenueCard from '../components/VenueCard';
+import SearchBar from '../components/SearchBar';
+import CategoryTabs from '../components/CategoryTabs';
+import { venues } from '../utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 

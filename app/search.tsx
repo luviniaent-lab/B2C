@@ -11,8 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import VenueCard from '../components/VenueCard';
-import { venues, events, farmhouses, restaurants } from '../utils/mockData';
+import { venues, events, farmhouses, restaurants } from './utils/mockData';
 
 export default function SearchScreen() {
   const [searchText, setSearchText] = useState('');

@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { events } from '../utils/mockData';
+import { events } from './utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 

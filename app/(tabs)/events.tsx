@@ -10,9 +10,9 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import EventCard from '../../components/EventCard';
-import CategoryTabs from '../../components/CategoryTabs';
-import { events } from '../../utils/mockData';
+import EventCard from '../components/EventCard';
+import CategoryTabs from '../components/CategoryTabs';
+import { events } from '../utils/mockData';
 
 export default function EventsScreen() {
   const [selectedTab, setSelectedTab] = useState('Upcoming');
