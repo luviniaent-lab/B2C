@@ -11,46 +11,20 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import CategoryTabs from '../components/CategoryTabs';
+import { farmhouses } from '../utils/mockData';
 
 const { width } = Dimensions.get('window');
 
-const FarmhouseScreen = () => {
+const FarmhouseScreen = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState('All');
 
   const filters = ['All', 'Pool', 'Garden', 'BBQ', 'AC'];
 
-  const farmhouses = [
-    {
-      id: 1,
-      name: 'Green Valley Farmhouse',
-      location: 'Gurgaon',
-      price: '₹15,000/day',
-      rating: 4.8,
-      image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
-      amenities: ['Pool', 'Garden', 'BBQ', 'AC'],
-      capacity: '20-30 people',
-    },
-    {
-      id: 2,
-      name: 'Sunset Villa',
-      location: 'Manesar',
-      price: '₹25,000/day',
-      rating: 4.9,
-      image: 'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg',
-      amenities: ['Pool', 'Garden', 'AC'],
-      capacity: '30-40 people',
-    },
-    {
-      id: 3,
-      name: 'Royal Retreat',
-      location: 'Sohna',
-      price: '₹35,000/day',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1396125/pexels-photo-1396125.jpeg',
-      amenities: ['Pool', 'Garden', 'BBQ', 'AC'],
-      capacity: '40-50 people',
-    },
-  ];
+  const filteredFarmhouses = farmhouses.filter(farmhouse => {
+    if (selectedFilter === 'All') return true;
+    return farmhouse.amenities.includes(selectedFilter);
+  });
 
   const renderFarmhouseCard = (farmhouse) => (
     <TouchableOpacity key={farmhouse.id} style={styles.farmhouseCard}>
@@ -117,32 +91,11 @@ const FarmhouseScreen = () => {
         </View>
 
         {/* Filters */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filtersContainer}
-          contentContainerStyle={styles.filtersContent}
-        >
-          {filters.map((filter) => (
-            <TouchableOpacity
-              key={filter}
-              style={[
-                styles.filterButton,
-                selectedFilter === filter && styles.selectedFilterButton,
-              ]}
-              onPress={() => setSelectedFilter(filter)}
-            >
-              <Text
-                style={[
-                  styles.filterText,
-                  selectedFilter === filter && styles.selectedFilterText,
-                ]}
-              >
-                {filter}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <CategoryTabs
+          categories={filters}
+          selectedCategory={selectedFilter}
+          onSelectCategory={setSelectedFilter}
+        />
 
         {/* Featured Banner */}
         <View style={styles.bannerContainer}>
@@ -164,7 +117,7 @@ const FarmhouseScreen = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.farmhousesContent}
         >
-          {farmhouses.map((farmhouse) => renderFarmhouseCard(farmhouse))}
+          {filteredFarmhouses.map((farmhouse) => renderFarmhouseCard(farmhouse))}
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -198,31 +151,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  filtersContainer: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  filtersContent: {
-    paddingRight: 20,
-  },
-  filterButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginRight: 12,
-  },
-  selectedFilterButton: {
-    backgroundColor: '#FFF',
-  },
-  filterText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: 'rgba(255,255,255,0.8)',
-  },
-  selectedFilterText: {
-    color: '#2E8B57',
   },
   bannerContainer: {
     paddingHorizontal: 20,

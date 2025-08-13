@@ -11,52 +11,20 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import CategoryTabs from '../components/CategoryTabs';
+import { restaurants } from '../utils/mockData';
 
 const { width } = Dimensions.get('window');
 
-const RestaurantScreen = () => {
+const RestaurantScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = ['All', 'Fine Dining', 'Casual', 'Bar', 'Rooftop'];
 
-  const restaurants = [
-    {
-      id: 1,
-      name: 'The Sky Lounge',
-      cuisine: 'Continental',
-      location: 'Connaught Place',
-      price: '₹₹₹',
-      rating: 4.6,
-      image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg',
-      category: 'Fine Dining',
-      features: ['Live Music', 'Rooftop', 'Bar'],
-      timing: '6 PM - 2 AM',
-    },
-    {
-      id: 2,
-      name: 'Urban Bistro',
-      cuisine: 'Italian',
-      location: 'Khan Market',
-      price: '₹₹',
-      rating: 4.4,
-      image: 'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg',
-      category: 'Casual',
-      features: ['Outdoor Seating', 'WiFi'],
-      timing: '12 PM - 11 PM',
-    },
-    {
-      id: 3,
-      name: 'Neon Nights',
-      cuisine: 'Asian Fusion',
-      location: 'Cyber Hub',
-      price: '₹₹₹₹',
-      rating: 4.8,
-      image: 'https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg',
-      category: 'Bar',
-      features: ['DJ', 'Dance Floor', 'Premium Bar'],
-      timing: '7 PM - 3 AM',
-    },
-  ];
+  const filteredRestaurants = restaurants.filter(restaurant => {
+    if (selectedCategory === 'All') return true;
+    return restaurant.category === selectedCategory;
+  });
 
   const renderRestaurantCard = (restaurant) => (
     <TouchableOpacity key={restaurant.id} style={styles.restaurantCard}>
@@ -139,32 +107,11 @@ const RestaurantScreen = () => {
         </View>
 
         {/* Categories */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.categoriesContainer}
-          contentContainerStyle={styles.categoriesContent}
-        >
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category && styles.selectedCategoryButton,
-              ]}
-              onPress={() => setSelectedCategory(category)}
-            >
-              <Text
-                style={[
-                  styles.categoryText,
-                  selectedCategory === category && styles.selectedCategoryText,
-                ]}
-              >
-                {category}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <CategoryTabs
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
 
         {/* Quick Stats */}
         <View style={styles.statsContainer}>
@@ -188,7 +135,7 @@ const RestaurantScreen = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.restaurantsContent}
         >
-          {restaurants.map((restaurant) => renderRestaurantCard(restaurant))}
+          {filteredRestaurants.map((restaurant) => renderRestaurantCard(restaurant))}
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -222,31 +169,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  categoriesContainer: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  categoriesContent: {
-    paddingRight: 20,
-  },
-  categoryButton: {
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginRight: 12,
-  },
-  selectedCategoryButton: {
-    backgroundColor: '#FFF',
-  },
-  categoryText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: 'rgba(255,255,255,0.8)',
-  },
-  selectedCategoryText: {
-    color: '#FF6B6B',
   },
   statsContainer: {
     flexDirection: 'row',

@@ -12,138 +12,57 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import VenueCard from '../components/VenueCard';
+import SearchBar from '../components/SearchBar';
+import CategoryTabs from '../components/CategoryTabs';
+import { venues } from '../utils/mockData';
 
 const { width, height } = Dimensions.get('window');
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchText, setSearchText] = useState('');
 
   const categories = ['All', 'HouseParty', 'Clubs', 'FarmHouse', 'Restaurant', 'Bar'];
 
-  const venues = [
-    {
-      id: 1,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-    {
-      id: 2,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-    {
-      id: 3,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-    {
-      id: 4,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-    {
-      id: 5,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-    {
-      id: 6,
-      name: 'Xyz Club',
-      rating: 4.7,
-      image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg',
-      category: 'Clubs',
-    },
-  ];
+  const filteredVenues = venues.filter(venue => {
+    const matchesCategory = selectedCategory === 'All' || venue.category === selectedCategory;
+    const matchesSearch = venue.name.toLowerCase().includes(searchText.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
-  const renderVenueCard = (venue, index) => (
-    <TouchableOpacity key={venue.id} style={styles.venueCard}>
-      <Image source={{ uri: venue.image }} style={styles.venueImage} />
-      <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.8)']}
-        style={styles.venueGradient}
-      >
-        <View style={styles.venueInfo}>
-          <Text style={styles.venueName}>{venue.name}</Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.rating}>{venue.rating}</Text>
-            <Ionicons name="star" size={16} color="#FFD700" />
-          </View>
-        </View>
-      </LinearGradient>
-    </TouchableOpacity>
-  );
+  const handleVenuePress = (venue) => {
+    // Navigate to venue details or booking screen
+    console.log('Venue selected:', venue.name);
+  };
 
   return (
-    <LinearGradient colors={['#B8A5A5', '#A89090']} style={styles.container}>
+    <LinearGradient colors={['#FF6B6B', '#FF8E53']} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.locationContainer}>
-            <Ionicons name="location-outline" size={24} color="#000" />
+            <Ionicons name="location-outline" size={24} color="#FFF" />
             <Text style={styles.locationText}>Delhi</Text>
           </View>
           <TouchableOpacity style={styles.profileButton}>
-            <Ionicons name="person-outline" size={24} color="#000" />
+            <Ionicons name="person-outline" size={24} color="#FFF" />
           </TouchableOpacity>
         </View>
 
         {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <LinearGradient
-            colors={['rgba(255,255,255,0.3)', 'rgba(255,255,255,0.1)']}
-            style={styles.searchBar}
-          >
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search venues..."
-              placeholderTextColor="rgba(0,0,0,0.5)"
-              value={searchText}
-              onChangeText={setSearchText}
-            />
-            <TouchableOpacity style={styles.filterButton}>
-              <Ionicons name="options-outline" size={20} color="#000" />
-            </TouchableOpacity>
-          </LinearGradient>
-        </View>
+        <SearchBar
+          value={searchText}
+          onChangeText={setSearchText}
+          placeholder="Search venues..."
+        />
 
         {/* Categories */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.categoriesContainer}
-          contentContainerStyle={styles.categoriesContent}
-        >
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category && styles.selectedCategoryButton,
-              ]}
-              onPress={() => setSelectedCategory(category)}
-            >
-              <Text
-                style={[
-                  styles.categoryText,
-                  selectedCategory === category && styles.selectedCategoryText,
-                ]}
-              >
-                {category}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <CategoryTabs
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
 
         {/* Featured Image */}
         <View style={styles.featuredContainer}>
@@ -151,7 +70,13 @@ const HomeScreen = () => {
             colors={['rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)']}
             style={styles.featuredImage}
           >
-            <Text style={styles.featuredText}>Image</Text>
+            <View style={styles.featuredContent}>
+              <Text style={styles.featuredTitle}>Discover Amazing Venues</Text>
+              <Text style={styles.featuredSubtitle}>Book your perfect event space today</Text>
+              <TouchableOpacity style={styles.featuredButton}>
+                <Text style={styles.featuredButtonText}>Explore Now</Text>
+              </TouchableOpacity>
+            </View>
           </LinearGradient>
         </View>
 
@@ -162,9 +87,29 @@ const HomeScreen = () => {
           contentContainerStyle={styles.venuesContent}
         >
           <View style={styles.venuesGrid}>
-            {venues.map((venue, index) => renderVenueCard(venue, index))}
+            {filteredVenues.map((venue, index) => (
+              <VenueCard
+                key={venue.id}
+                venue={venue}
+                onPress={handleVenuePress}
+                style={index % 2 === 1 ? { marginLeft: 15 } : {}}
+              />
+            ))}
           </View>
         </ScrollView>
+
+        {/* Quick Action Button */}
+        <TouchableOpacity 
+          style={styles.quickActionButton}
+          onPress={() => navigation.navigate('CreateEvent')}
+        >
+          <LinearGradient
+            colors={['#FF4757', '#FF3742']}
+            style={styles.quickActionGradient}
+          >
+            <Ionicons name="add" size={28} color="#FFF" />
+          </LinearGradient>
+        </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -193,57 +138,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 8,
-    color: '#000',
+    color: '#FFF',
   },
   profileButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  searchContainer: {
-    marginBottom: 20,
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#000',
-  },
-  filterButton: {
-    padding: 5,
-  },
-  categoriesContainer: {
-    marginBottom: 20,
-  },
-  categoriesContent: {
-    paddingRight: 20,
-  },
-  categoryButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 25,
-    backgroundColor: 'rgba(255,255,255,0.6)',
-    marginRight: 12,
-  },
-  selectedCategoryButton: {
-    backgroundColor: '#FF4757',
-  },
-  categoryText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-  },
-  selectedCategoryText: {
-    color: '#FFF',
   },
   featuredContainer: {
     marginBottom: 20,
@@ -253,11 +156,34 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
-  featuredText: {
+  featuredContent: {
+    alignItems: 'center',
+  },
+  featuredTitle: {
     fontSize: 24,
+    fontWeight: '800',
+    color: '#FFF',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  featuredSubtitle: {
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.8)',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  featuredButton: {
+    backgroundColor: '#FFF',
+    paddingHorizontal: 25,
+    paddingVertical: 12,
+    borderRadius: 25,
+  },
+  featuredButtonText: {
+    fontSize: 16,
     fontWeight: '600',
-    color: '#000',
+    color: '#FF6B6B',
   },
   venuesContainer: {
     flex: 1,
@@ -271,46 +197,25 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  venueCard: {
-    width: (width - 60) / 2,
-    height: 150,
-    borderRadius: 15,
-    marginBottom: 15,
-    overflow: 'hidden',
+  quickActionButton: {
+    position: 'absolute',
+    bottom: 110,
+    right: 20,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
   },
-  venueImage: {
+  quickActionGradient: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
-  },
-  venueGradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '60%',
-    justifyContent: 'flex-end',
-    padding: 12,
-  },
-  venueInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    borderRadius: 30,
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  venueName: {
-    color: '#FFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  rating: {
-    color: '#FFF',
-    fontSize: 12,
-    fontWeight: '600',
-    marginRight: 4,
   },
 });
 

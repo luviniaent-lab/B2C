@@ -10,6 +10,8 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import EventsScreen from './src/screens/EventsScreen';
 import FarmhouseScreen from './src/screens/FarmhouseScreen';
 import RestaurantScreen from './src/screens/RestaurantScreen';
+import EventDetailScreen from './src/screens/EventDetailScreen';
+import CreateEventScreen from './src/screens/CreateEventScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -70,9 +72,11 @@ function TabNavigator() {
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar style="light" backgroundColor="#B8A5A5" />
+      <StatusBar style="light" backgroundColor="#FF4757" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Main" component={TabNavigator} />
+        <Stack.Screen name="EventDetail" component={EventDetailScreen} />
+        <Stack.Screen name="CreateEvent" component={CreateEventScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
