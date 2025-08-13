@@ -41,6 +41,7 @@ const VenueCard: React.FC<VenueCardProps> = ({ venue, onPress, style }) => {
       >
         <View style={styles.info}>
           <Text style={styles.name}>{venue.name}</Text>
+          <Text style={styles.location}>{venue.location}</Text>
           <View style={styles.ratingContainer}>
             <Text style={styles.rating}>{venue.rating}</Text>
             <Ionicons name="star" size={16} color="#FFD700" />
@@ -87,11 +88,17 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 14,
     fontWeight: '600',
-    flex: 1,
+    marginBottom: 4,
+  },
+  location: {
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 12,
+    marginBottom: 8,
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'flex-end',
   },
   rating: {
     color: '#FFF',

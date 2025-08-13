@@ -32,7 +32,10 @@ export default function HomeScreen() {
   });
 
   const handleVenuePress = (venue) => {
-    console.log('Venue selected:', venue.name);
+    router.push({
+      pathname: '/venue-detail',
+      params: { venueId: venue.id }
+    });
   };
 
   return (
@@ -44,9 +47,20 @@ export default function HomeScreen() {
             <Ionicons name="location-outline" size={24} color="#FFF" />
             <Text style={styles.locationText}>Delhi</Text>
           </View>
-          <TouchableOpacity style={styles.profileButton}>
-            <Ionicons name="person-outline" size={24} color="#FFF" />
-          </TouchableOpacity>
+          <View style={styles.headerActions}>
+            <TouchableOpacity 
+              style={styles.actionButton}
+              onPress={() => router.push('/search')}
+            >
+              <Ionicons name="search-outline" size={24} color="#FFF" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.actionButton}
+              onPress={() => router.push('/notifications')}
+            >
+              <Ionicons name="notifications-outline" size={24} color="#FFF" />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Search Bar */}
@@ -142,13 +156,18 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: '#FFF',
   },
-  profileButton: {
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 10,
   },
   featuredContainer: {
     marginBottom: 20,
